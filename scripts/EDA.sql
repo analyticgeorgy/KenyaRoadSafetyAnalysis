@@ -128,3 +128,88 @@ COUNT(*) TotalAccidents
 FROM cleaned_data.Road_Accident_Data
 GROUP BY Accident_Severity, Vehicle_Type
 ORDER BY TotalAccidents DESC;
+
+--Advanced EDA
+
+--Fatality Rate by Weather Condition
+SELECT
+Weather_Conditions,
+COUNT(*) AS Total_Accidents,
+SUM(
+CASE WHEN Accident_Severity = 'Fatal' THEN 1 ELSE 0
+END
+) AS Fatal_Accidents,
+ROUND(
+SUM(CASE WHEN Accident_Severity = 'Fatal' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)
+,2) AS Fatality_Rate
+FROM cleaned_data.Road_Accident_Data
+GROUP BY Weather_Conditions
+ORDER BY Fatality_Rate DESC;
+
+--Fatality Rate by Vehicle Type
+SELECT
+Vehicle_Type,
+COUNT(*) Total_Accidents,
+SUM(
+CASE WHEN Accident_Severity = 'Fatal' THEN 1 ELSE 0
+END
+) AS Fatal_Accidents,
+ROUND(
+SUM(CASE WHEN Accident_Severity = 'Fatal' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)
+,2) AS Fatality_Rate
+FROM cleaned_data.Road_Accident_Data
+GROUP BY Vehicle_Type
+ORDER BY Fatality_Rate DESC;
+
+--Fatality Rate by Light_Conditions
+SELECT
+Light_Conditions,
+COUNT(*) AS Total_Accidents,
+SUM(
+CASE WHEN Accident_Severity = 'Fatal' THEN 1 ELSE 0
+END
+) AS Fatal_Accidents,
+ROUND(
+SUM(CASE WHEN Accident_Severity = 'Fatal' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)
+,2) AS Fatality_Rate
+FROM cleaned_data.Road_Accident_Data
+GROUP BY Light_Conditions
+ORDER BY Fatality_Rate DESC;
+
+--Most Dangerous Speed Limits
+SELECT
+Speed_limit,
+COUNT(*) AS Total_Accidents,
+SUM(
+CASE WHEN Accident_Severity = 'Fatal' THEN 1 ELSE 0
+END
+) AS Fatal_Accidents,
+ROUND(
+SUM(CASE WHEN Accident_Severity = 'Fatal' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)
+,2) AS Fatality_Rate
+FROM cleaned_data.Road_Accident_Data
+GROUP BY Speed_limit
+ORDER BY Fatality_Rate DESC;
+
+--Urban vs Rural Severity
+SELECT
+Urban_or_Rural_Area,
+COUNT(*) AS Total_Accidents,
+SUM(
+CASE WHEN Accident_Severity = 'Fatal' THEN 1 ELSE 0
+END
+) AS Fatal_Accidents,
+ROUND(
+SUM(CASE WHEN Accident_Severity = 'Fatal' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)
+,2) AS Fatality_Rate
+FROM cleaned_data.Road_Accident_Data
+GROUP BY Urban_or_Rural_Area
+ORDER BY Fatality_Rate DESC;
+
+--Accident Hot Hours
+SELECT
+DATEPART(HOUR, Time_Cleaned) AS Accident_Hour,
+COUNT(*) Total_Accidents
+FROM cleaned_data.Road_Accident_Data
+GROUP BY DATEPART(HOUR, Time_Cleaned)
+ORDER BY Total_Accidents DESC;
